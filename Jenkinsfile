@@ -1,7 +1,7 @@
 node{
     stage('git checjout')
     {
-        git branch: 'master', url: 'https://github.com/kondetimounika80/insure-me.git'
+        git branch: 'master', url: 'https://github.com/chandanadevopslearn/insure-me.git'
     }
 
     stage('build'){
