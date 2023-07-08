@@ -10,15 +10,15 @@ node{
     }
     stage('dockerimagebuild')
     {
-    sh 'sudo docker build -t kondetimounika/insureme:1.0 .'
+    sh 'sudo docker build -t mchandana123/insureme:1.0 .'
    
     }
     stage('docker image push to registry')
     {
     
     withCredentials([string(credentialsId: 'docker-password', variable: 'docker')]) {
-        sh 'docker login -u kondetimounika -p ${docker}'
-        sh 'docker push kondetimounika/insureme:1.0'
+        sh 'docker login -u mchandana123 -p ${docker}'
+        sh 'docker push mchandana123/insureme:1.0'
     
 }
     }
