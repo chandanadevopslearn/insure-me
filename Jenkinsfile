@@ -8,6 +8,11 @@ node{
     
     sh 'mvn clean package'
     }
+    stage('test'){
+        
+    sh 'mvn test'
+        
+    }
     stage('dockerimagebuild')
     {
     sh 'sudo docker build -t mchandana123/insureme:1.0 .'
@@ -16,15 +21,15 @@ node{
     stage('docker image push to registry')
     {
     
-    withCredentials([string(credentialsId: 'docker-password', variable: 'docker')]) {
-        sh 'docker login -u mchandana123 -p ${docker}'
-        sh 'docker push mchandana123/insureme:1.0'
+    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerpwd')]) {
+        sh 'docker login -u mchandana123 -p ${dockerpwd} '
     
 }
+        sh 'docker push  mchandana123/insureme:1.0 '
     }
     stage('deploy')
     {
     
-       ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'myansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml' 
+       ansiblePlaybook credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'myansible', inventory: 'hosts', playbook: 'ansible-playbook.yml'
     }
 }
